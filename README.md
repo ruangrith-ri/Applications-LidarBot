@@ -11,27 +11,16 @@ LidarBot is a very powerful and easy-to-use wheeled robot kit that can be applie
 **LidarBot Directory tree**
 
     ├─Example
-
     │  ├─LidarBot_CarMain_V1.1 - LidarBot master program
-
     │  ├─LidarBot_RemoteController_V1.0 - Remote control handle programV1.0
-
     │  └─LidarBot_RemoteController_V1.2 - Remote control handle programV1.2(Double the accuracy of V1.0)
-
     │
-
     ├─Firmware(The bottom MEGA328P firmware can be ignored when used)
-
     │  ├─LidarBot_Bottom_FW - Car floor wheel control board master MEGA328P program (can be ignored)
-
     │  └─LidarBot_Remote_FW - MEGA328P program inside the handle (can be ignored)
-
     │
-
     ├─Product_Picture - Product Image
-
     ├─Schematic_Diagram - Schematic diagram
-
     └─SComAssistant - Host computer (temporary only radar map display function)
 
 
@@ -148,3 +137,16 @@ void loop()
 <img src="https://raw.githubusercontent.com/m5stack/Applications-LidarBot/master/LidarBot/Product_Picture/lidarbot_03.png" width="500" height="500">
 <img src="https://raw.githubusercontent.com/m5stack/Applications-LidarBot/master/LidarBot/Product_Picture/lidarbot_01.png" width="500" height="500">
 <img src="https://raw.githubusercontent.com/m5stack/Applications-LidarBot/master/LidarBot/Product_Picture/lidarbot_02.png" width="500" height="500">
+
+
+## Pinout
+
+### Remote Control
+
+- ( ) Left
+- ( ) Center
+- (37) Right
+
+- Analog X
+- Analog Y
+- Analog Button
