@@ -145,10 +145,15 @@ void loop()
 
 - (39) Left
 - (38) Center
-- (37) Right
+- (37) Right (Keep WhileLoop when button push and hold to pair)
 
 - Analog X
 - Analog Y
 - Analog Button
 
-## API
+## API By FRAM18
+- keyboard.getAnalogX()
+- keyboard.getAnalogY()
+- motorControlTankTurnMode(uint8_t speed, uint8_t turn)
+- motorControlMecanumMode(uint8_t speedDirectionX,
+                                       uint8_t speedDirectionY)

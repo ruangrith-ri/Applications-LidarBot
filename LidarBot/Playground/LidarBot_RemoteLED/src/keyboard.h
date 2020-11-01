@@ -9,6 +9,9 @@ class KeyBoard {
   void Init();
   void GetValue(void);
 
+  int getAnalogX();
+  int getAnalogY();
+
  public:
   uint8_t keyData[5];
   uint16_t adX, adY;
@@ -24,4 +27,5 @@ class KeyBoard {
   uint8_t oldKey;
   int8_t consoleX, consoleY;
 };
+
 #endif

@@ -384,3 +384,7 @@ void KeyBoard::LedControl(void) {
     keyData[2] = 0;
   }
 }
+
+int KeyBoard::getAnalogX() { return consoleX; }
+
+int KeyBoard::getAnalogY() { return consoleY; }

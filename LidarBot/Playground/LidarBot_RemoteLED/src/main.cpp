@@ -2,15 +2,12 @@
 #include <M5Stack.h>
 #include <esp_now.h>
 
-#include "FRAM18.h"
 #include "espnow.h"
 #include "keyboard.h"
 #include "logo.h"
 
 Espnow espnow;
 KeyBoard keyboard;
-
-uint8_t keyData[3] = {1, 0, 0};
 
 static uint16_t distance[360], oldDisX[360], oldDisY[360];
 uint8_t led[5] = {0x03, 0x03, 0x03, 0x03, 0x03};
@@ -53,14 +50,18 @@ void MapDisplay(void) {
 }
 
 void setup() {
-  m5.begin();
+  M5.begin();
 
   M5.Lcd.fillScreen(TFT_BLACK);
-  m5.lcd.pushImage(0, 0, 320, 240, (uint16_t *)gImage_logo);
+  M5.Lcd.pushImage(0, 0, 320, 240, (uint16_t *)gImage_logo);
   M5.Lcd.setCursor(240, 1, 4);
-  M5.Lcd.printf("BOT 01");
+  M5.Lcd.printf("JEENO");
   delay(2000);
   M5.Lcd.fillScreen(TFT_BLACK);
+
+  M5.Speaker.beep();
+  delay(100);
+  M5.Speaker.mute();
 
   keyboard.Init();
 
@@ -68,16 +69,38 @@ void setup() {
   esp_now_register_recv_cb(OnDataRecv);
 }
 
+uint8_t dataTankTurnMode[3] = {0, 0, 0};
+uint8_t dataMecanumMode[3] = {0, 0, 1};
+
+void motorControlTankTurnMode(uint8_t speed, uint8_t turn) {
+  dataTankTurnMode[0] = turn;
+  dataTankTurnMode[1] = speed;
+
+  esp_now_send(espnow.peer_addr, dataTankTurnMode, 3);
+}
+
+void motorControlMecanumMode(uint8_t speedDirectionX, uint8_t speedDirectionY) {
+  dataTankTurnMode[0] = speedDirectionX;
+  dataTankTurnMode[1] = speedDirectionY;
+
+  esp_now_send(espnow.peer_addr, dataMecanumMode, 3);
+}
+
 void loop() {
   espnow.RemoteConnectUpdate();
   keyboard.GetValue();
-  esp_now_send(espnow.peer_addr, keyData /* keyboard.keyData*/, 3);
-  MapDisplay();
+  esp_now_send(espnow.peer_addr, keyboard.keyData, 3);
+  // motorControlTankTurnMode(1, 0);
+  /*Serial.println("D0: " + String(distance[0]) + "\t\tD45: " +
+                 String(distance[44]) + "\t\tD90: " + String(distance[89]) +
+                 "\t\tD135: " + String(distance[134]) + "\t\tD180: " +
+                 String(distance[179]) + +"\t\tD225: " + String(distance[224]) +
+                 "\t\tD270: " + String(distance[269]) +
+                 +"\t\tD315: " + String(distance[314]));*/
 
-  for (int i = 0; i < 6; i++) {
-   Serial.print(String(espnow.peer_addr[i])+"  -  ");
-  }
-  Serial.println(String(espnow.peer_addr[6]));
+  String log = String(distance[269]) + "--------";
+  M5.Lcd.drawString(log, 20, 100, 6);
+  MapDisplay();
 
   if (digitalRead(37) == LOW) {
     while (digitalRead(37) == LOW)
