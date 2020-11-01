@@ -1,6 +1,6 @@
 # LidarBot
 
-English | [中文](https://github.com/m5stack/Applications-LidarBot/blob/master/README_zh_CN.md)
+English
 
 *Document Link：https://docs.m5stack.com/#/zh_CN/app/lidarbot*
 
@@ -143,10 +143,12 @@ void loop()
 
 ### Remote Control
 
-- ( ) Left
-- ( ) Center
+- (39) Left
+- (38) Center
 - (37) Right
 
 - Analog X
 - Analog Y
 - Analog Button
+
+## API

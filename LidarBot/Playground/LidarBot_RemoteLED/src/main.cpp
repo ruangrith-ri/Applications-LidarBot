@@ -2,12 +2,15 @@
 #include <M5Stack.h>
 #include <esp_now.h>
 
+#include "FRAM18.h"
 #include "espnow.h"
 #include "keyboard.h"
 #include "logo.h"
 
 Espnow espnow;
 KeyBoard keyboard;
+
+uint8_t keyData[3] = {1, 0, 0};
 
 static uint16_t distance[360], oldDisX[360], oldDisY[360];
 uint8_t led[5] = {0x03, 0x03, 0x03, 0x03, 0x03};
@@ -68,11 +71,14 @@ void setup() {
 void loop() {
   espnow.RemoteConnectUpdate();
   keyboard.GetValue();
-  esp_now_send(espnow.peer_addr, keyboard.keyData, 3);
+  esp_now_send(espnow.peer_addr, keyData /* keyboard.keyData*/, 3);
   MapDisplay();
-  
-  Serial.println(digitalRead(36));
-  
+
+  for (int i = 0; i < 6; i++) {
+   Serial.print(String(espnow.peer_addr[i])+"  -  ");
+  }
+  Serial.println(String(espnow.peer_addr[6]));
+
   if (digitalRead(37) == LOW) {
     while (digitalRead(37) == LOW)
       ;
