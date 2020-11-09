@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "LidarBot_RemoteLED",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"string": "cpp"
+		}
+	}
+}
