@@ -87,6 +87,10 @@ void motorControlMecanumMode(uint8_t speedDirectionX, uint8_t speedDirectionY) {
   esp_now_send(espnow.peer_addr, dataMecanumMode, 3);
 }
 
+int getDistance(int angle) {
+  return angle >= 8 ? distance[angle - 8] : distance[angle + 352];
+}
+
 void loop() {
   espnow.RemoteConnectUpdate();
   keyboard.GetValue();
@@ -99,14 +103,8 @@ void loop() {
                  "\t\tD270: " + String(distance[269]) +
                  +"\t\tD315: " + String(distance[314]));*/
 
-  String log = String(distance[269]) + "--------";
+  String log = String(getDistance(269)) + "--------";
   M5.Lcd.drawString(log, 20, 100, 7);
-
-  String log2 = String(distance[269 + 7]) + "--------";
-  M5.Lcd.drawString(log2, 20, 150, 6);
-
-  String log3 = String(distance[269 - 7]) + "--------";
-  M5.Lcd.drawString(log3, 20, 50, 7);
 
   MapDisplay();
 
@@ -115,8 +113,4 @@ void loop() {
       ;
     // esp_now_send(espnow.peer_addr, led, 4);
   }
-}
-
-int getDistance(int angle) {
-  return angle >= 8 ? distance[angle - 8] : distance[angle + 352];
 }
