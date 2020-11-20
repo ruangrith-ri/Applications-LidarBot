@@ -36,6 +36,7 @@ void MapDisplay(void) {
     disY = (100 + (distance[showAngle] / 70) *
                       sin(3.14159 * showAngle / 180 + 0.13)) *
            2;
+
     M5.Lcd.drawPixel(oldDisX[showAngle], oldDisY[showAngle], BLACK);
 
     if (distance[showAngle] == 250) {
@@ -99,7 +100,14 @@ void loop() {
                  +"\t\tD315: " + String(distance[314]));*/
 
   String log = String(distance[269]) + "--------";
-  M5.Lcd.drawString(log, 20, 100, 6);
+  M5.Lcd.drawString(log, 20, 100, 7);
+
+  String log2 = String(distance[269 + 7]) + "--------";
+  M5.Lcd.drawString(log2, 20, 150, 6);
+
+  String log3 = String(distance[269 - 7]) + "--------";
+  M5.Lcd.drawString(log3, 20, 50, 7);
+
   MapDisplay();
 
   if (digitalRead(37) == LOW) {
@@ -107,4 +115,8 @@ void loop() {
       ;
     // esp_now_send(espnow.peer_addr, led, 4);
   }
+}
+
+int getDistance(int angle) {
+  return angle >= 8 ? distance[angle - 8] : distance[angle + 352];
 }
